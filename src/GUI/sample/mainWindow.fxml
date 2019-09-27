@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<AnchorPane prefHeight="0.0" prefWidth="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.sample.Controller">
+   <children>
+      <Pane layoutX="-7.0" prefHeight="260.0" prefWidth="450.0">
+         <children>
+            <Button fx:id="Trian" layoutX="25.0" layoutY="15.0" mnemonicParsing="false" onAction="#clickTrian" prefHeight="120.0" prefWidth="120.0" text="Triangle" />
+            <Button fx:id="Trap" layoutX="170.0" layoutY="15.0" mnemonicParsing="false" onAction="#clickTrap" prefHeight="120.0" prefWidth="120.0" text="Trapetion" />
+            <Button fx:id="Rad" layoutX="315.0" layoutY="15.0" mnemonicParsing="false" onAction="#clickRad" prefHeight="120.0" prefWidth="120.0" text="Radial" />
+            <ImageView fitHeight="98.0" fitWidth="120.0" layoutX="25.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Pictures/TrianMain.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="100.0" fitWidth="120.0" layoutX="170.0" layoutY="149.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../Pictures/TrapMain.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="106.0" fitWidth="113.0" layoutX="323.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Pictures/RadMain.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

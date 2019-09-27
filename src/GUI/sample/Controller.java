@@ -167,7 +167,7 @@ public class Controller {
         alert.showAndWait();
     }
 
-    //1 ветка
+    //1 веткат
 
 
 }

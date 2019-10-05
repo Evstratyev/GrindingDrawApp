@@ -2,12 +2,16 @@ package Objects;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -15,14 +19,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Form implements exportable {
+    private double mouseClickX;
+    private double mouseClickY;
 
     public abstract void create();
 
-    public void drawForm(List<Double[][]> pointsArray){
+    public void drawForm(List<Double[][]> pointsArray) {
         {
             Stage primaryStage = new Stage();
             Group root = new Group();
-            primaryStage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
 //            NumberAxis xAxis = new NumberAxis("Values for X-Axis", pointsArray.get(pointsArray.size()-1)[0][0] - 0.1, pointsArray.get(0)[0][0] + 0.1, 0.5);
 //            NumberAxis yAxis = new NumberAxis("Values for Y-Axis", +0.1, pointsArray.get(0)[0][1] - 0.1, 0.5);
 
@@ -42,6 +49,70 @@ public abstract class Form implements exportable {
             primaryStage.show();
 
             System.out.println(pointsArray.size());
+
+            scene.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    System.out.println("mouse click detected! " + event.getSceneX() + ", " + event.getSceneY());
+                    mouseClickX = event.getSceneX();
+                    mouseClickY = event.getSceneY();
+                }
+            });
+            scene.setOnMouseReleased(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+
+                    System.out.println("setOnMouseReleased! " + event.getSceneX() + ", " + event.getSceneY());
+
+                    if (mouseClickX > event.getSceneX()) {
+                        chart.setLayoutX(chart.getLayoutX() - (mouseClickX - event.getSceneX()));
+                    } else {
+                        chart.setLayoutX(chart.getLayoutX() + (-mouseClickX + event.getSceneX()));
+                    }
+                    if (mouseClickY > event.getSceneY()) {
+                        chart.setLayoutY(chart.getLayoutY() - (mouseClickY - event.getSceneY()));
+                    } else {
+                        chart.setLayoutY(chart.getLayoutY() + (-mouseClickY + event.getSceneY()));
+                    }
+
+
+                }
+            });
+
+            scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent event) {
+                    System.out.println(event.toString());
+                    if (event.getCode().toString().equals("EQUALS")) {
+                        chart.setScaleX(chart.getScaleX() + 0.1);
+                        chart.setScaleY(chart.getScaleY() + 0.1);
+                    }
+                    if (event.getCode().toString().equals("MINUS")) {
+                        chart.setScaleX(chart.getScaleX() - 0.1);
+                        chart.setScaleY(chart.getScaleY() - 0.1);
+                    }
+                    if (event.getCode().toString().equals("R")) {
+                        chart.setLayoutX(0.0);
+                        chart.setLayoutY(0.0);
+                        chart.setScaleX(1.0);
+                        chart.setScaleY(1.0);
+                    }
+                }
+            });
+
+            scene.setOnScroll(new EventHandler<ScrollEvent>() {
+                @Override
+                public void handle(ScrollEvent event) {
+                    System.out.println("scrol " + event.toString());
+                    if (event.getDeltaY() > 0){
+                        chart.setScaleX(chart.getScaleX() + 0.5);
+                        chart.setScaleY(chart.getScaleY() + 0.5);
+                    }else{
+                        chart.setScaleX(chart.getScaleX() - 0.5);
+                        chart.setScaleY(chart.getScaleY() - 0.5);
+                    }
+                }
+            });
         }
     }
 
